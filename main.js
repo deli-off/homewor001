@@ -2,79 +2,100 @@ let products = [
     {
         name: 'milk',
         type: 'milk',
-        price: 10000
+        price: 10000,
+        qt: 10
     },
     {
         name: 'apple',
         type: 'fruit',
-        price: 6000
+        price: 6000,
+        qt: 8
     },
     {
         name: 'vodka',
         type: 'alcohol',
-        price: 70000
+        price: 70000,
+        qt: 20
     },
     {
         name: 'tvorog',
         type: 'milk',
-        price: 15000
+        price: 15000,
+        qt: 15
     },
     {
         name: 'banan',
         type: 'fruit',
-        price: 25000
+        price: 25000,
+        qt: 20
     },
     {
         name: 'pivo',
         type: 'alcohol',
-        price: 50000
+        price: 50000,
+        qt: 42
     },
     {
         name: 'cheese',
         type: 'milk',
-        price: 40000
+        price: 40000,
+        qt: 20
     },
     {
         name: 'persik',
         type: 'fruit',
-        price: 23000
+        price: 23000,
+        qt: 5
     },
     {
         name: 'mochito',
         type: 'alcohol',
-        price: 120000
-    },
+        price: 120000,
+        qt: 25
+    }
 ]
 
-// Найти общ сумму
-// Найти среднюю цену
-// найти самый дорогой продукт
-// найти самый дешевый продукт
-// let sumPrice = 0;
+let total = 0;
+let avarege = 0;
+let milk = 0;
+let alcohol = 0;
+let friuts = 0;
+let discount = 60;
+let disc = 20;
 
 
-let sumPrice = 0;
-let maxSum = 0;
-let minSum = 0;
 
 for (let item of products) {
-    // 1
-    sumPrice += item.price
+    total += item.price
 
-    // 3-4
-    if (item.price > products.length) {
-        maxSum = item
+    if (item.type === 'milk') {
+        milk++
+    } else if (item.type === 'alcohol') {
+        alcohol++
+    } else if (item.type === 'fruit') {
+        friuts++
     }
-    if (item.price < products.length) {
-        minSum = item
+
+    item.salePrice = item.price - (discount * item.price / 100)
+
+    if (item.qt <= 10) {
+        item.saleP = item.price + (disc * item.price / 100)
+    } else if (item.qt >= 20) {
+        item.saleP = item.price - (disc * item.price / 100)
     }
+
 }
 
-console.log(minSum);
-console.log(maxSum);
+avarege = total / products.length
 
-let total = products.reduce((a, b) => {
-    return a + b.price
-}, 0)
-console.log(sumPrice);
-console.log(total / products.length);
+console.log('Cумма' + '-' + total);
+console.log('Cр.ариф' + '-' + avarege);
+console.log('Кол-во молочных продуктов' + '-' + milk);
+console.log('Кол-во алкогольных продуктов' + '-' + alcohol);
+console.log('Кол-во фруктовых продуктов' + '-' + friuts);
+console.log(products);
+
+let max = products.reduce((a, b) => a.price > b.price ? a : b)
+let min = products.reduce((a, b) => a.price < b.price ? a : b)
+console.log(max);
+console.log(min);
